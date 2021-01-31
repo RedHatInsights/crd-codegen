@@ -18,8 +18,8 @@ VERSION=0.21.1
 wget https://github.com/strimzi/strimzi-kafka-operator/releases/download/${VERSION}/strimzi-crds-${VERSION}.yaml
 
 # generate types using the CRD
-crd-codegen -in=strimzi-crds-${VERSION}.yaml -out=generated
+crd-codegen -in=strimzi-crds-${VERSION}.yaml -to=generated
 
 ls generated/apis/kafka.strimzi.io/v1beta1/
-
+# kafkaconnects2i_types.go  kafkaconnect_types.go  kafkamirrormaker_types.go  kafkatopic_types.go  kafka_types.go  kafkauser_types.go
 ```
