@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/bsquizz/crd-codegen/generate"
+	generate "github.com/bsquizz/crd-codegen"
 )
 
 func main() {
