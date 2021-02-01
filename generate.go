@@ -12,7 +12,7 @@ import (
 
 	"encoding/json"
 
-	typegen "github.com/orus-io/json-schema-generate"
+	typegen "github.com/a-h/generate"
 	goyaml "gopkg.in/yaml.v2"
 	apiextv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -145,7 +145,7 @@ func generateTypes(schemaFilePath string, pkgName string, outPath string) error 
 		return fmt.Errorf("error opening output file: %v", err)
 	}
 
-	typegen.Output(w, g, pkgName, false, false)
+	typegen.Output(w, g, pkgName) //false, false)
 
 	return nil
 }
