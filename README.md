@@ -1,8 +1,8 @@
 # crd-codegen
 
-**Work in progress**
+Generates Go API interfaces for a Kubernetes Custom Resource by parsing its OpenAPI schema in the YAML `CustomResourceDefinition`. Useful if an operator/application was not written in Go but you have a need to interact with its resoures.
 
-Generates Go API interfaces for a Kubernetes Custom Resource by parsing a YAML `CustomResourceDefinition`. Useful if an operator/application was not written in Go but you have a need to interact with its resoures.
+This is a **work in progress**. The JSON schema generators do not generate code that is fully-compatible with k8s controller-gen, however getting more of the process automated is in the works.
 
 ## Example usage
 
