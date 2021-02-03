@@ -1,4 +1,4 @@
-module github.com/bsquizz/strimzi-go
+module github.com/RedHatInsights/crd-codegen
 
 go 1.15
 
