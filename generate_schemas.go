@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"encoding/json"
 
@@ -68,7 +68,7 @@ func decodeCRD(jsonBytes []byte) (*apiextv1.CustomResourceDefinition, error) {
 
 func generate(in *string, out *string) {
 	// read yaml
-	yb, err := ioutil.ReadFile(*in)
+	yb, err := os.ReadFile(*in)
 	if err != nil {
 		log.Fatalf("failed to read file: %v", err)
 	}
@@ -83,6 +83,7 @@ func generate(in *string, out *string) {
 	}
 
 	kind := crd.Spec.Names.Kind
+	fmt.Printf("parsing %s\n", kind)
 
 	schema := &JSONSchema{
 		Schema: "http://json-schema.org/draft-07/schema#",
@@ -93,32 +94,13 @@ func generate(in *string, out *string) {
 		Definitions: make(map[string]apiextv1.JSONSchemaProps),
 	}
 
-	fmt.Printf("%v", crd.Spec.Versions[0].Schema.OpenAPIV3Schema.Properties)
-
-	crd.Spec.Versions = []apiextv1.CustomResourceDefinitionVersion{{
-		Name:               "v1beta2",
-		Served:             false,
-		Storage:            false,
-		Deprecated:         false,
-		DeprecationWarning: new(string),
-		Schema: &apiextv1.CustomResourceValidation{
-			OpenAPIV3Schema: &apiextv1.JSONSchemaProps{
-				Type:        "object",
-				Description: kind,
-				Properties:  crd.Spec.Versions[0].Schema.OpenAPIV3Schema.Properties,
-			},
-		},
-		Subresources:             &apiextv1.CustomResourceSubresources{},
-		AdditionalPrinterColumns: []apiextv1.CustomResourceColumnDefinition{},
-	}}
-
 	schema.Definitions[kind] = *crd.Spec.Versions[0].Schema.OpenAPIV3Schema
 
 	output, err := json.MarshalIndent(schema, "", "  ")
 	if err != nil {
 		log.Fatalf("failed to marshal json: %v", err)
 	}
-	err = ioutil.WriteFile(*out, output, 0644)
+	err = os.WriteFile(*out, output, 0644)
 	if err != nil {
 		log.Fatalf("failed to write file: %v", err)
 	}
